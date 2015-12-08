@@ -78,6 +78,10 @@ export default Ember.Component.extend({
     this.set('_startY', undefined);
     this.set('_lastY', undefined);
     this.set('loading', loading);
+
+    if (loading) {
+      this.sendAction('refresh');
+    }
   },
 
   _dy: Ember.computed('_lastY', '_startY', function () {

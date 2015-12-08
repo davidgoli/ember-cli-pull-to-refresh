@@ -19,7 +19,12 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   integration: true,
   setup(assert) {
     App = startApp();
-    this.render(hbs`{{pull-to-refresh}}`);
+    this.render(hbs`{{pull-to-refresh refresh='refresh'}}`);
+
+    this.gotRefreshAction = false;
+    this.on('refresh', () => {
+      this.gotRefreshAction = true;
+    });
 
     this.pullDown = (start, end) => {
       this.$('.pull-to-refresh-child').trigger(touchEventY('touchstart', start));
@@ -34,9 +39,10 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
       assert.equal(this.$('.pull-to-refresh-child').attr('style'), `top: ${top}px;`);
     };
 
-    this.isLoading = (loading) => {
+    this.expectLoading = (loading) => {
       let method = loading ? 'ok' : 'notOk';
       assert[method](this.$('.pull-to-refresh-parent').hasClass('loading'));
+      assert.equal(this.gotRefreshAction, loading, 'refresh action sent');
     };
   },
   teardown() {
@@ -62,7 +68,7 @@ test('letting go', function () {
   this.letGo();
 
   this.expectTop(0);
-  this.isLoading(false);
+  this.expectLoading(false);
 });
 
 test('snapping back', function () {
@@ -71,21 +77,21 @@ test('snapping back', function () {
   this.letGo();
 
   this.expectTop(0);
-  this.isLoading(true);
+  this.expectLoading(true);
 });
 
 test('pulling down when loading', function () {
   this.pullDown(80, 130);
   this.letGo();
   this.expectTop(0);
-  this.isLoading(true);
+  this.expectLoading(true);
 
   this.pullDown(80, 200);
   this.expectTop(0);
-  this.isLoading(true);
+  this.expectLoading(true);
 
   this.letGo();
-  this.isLoading(true);
+  this.expectLoading(true);
 });
 
 test('overpulling', function () {
@@ -94,5 +100,5 @@ test('overpulling', function () {
 
   this.letGo();
 
-  this.isLoading(true);
+  this.expectLoading(true);
 });
