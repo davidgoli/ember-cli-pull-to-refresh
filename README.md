@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh.svg?branch=master)](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh)
+[![Code Climate](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh/badges/gpa.svg)](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh)
 
 # Ember-cli-pull-to-refresh
 
