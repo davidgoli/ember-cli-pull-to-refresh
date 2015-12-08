@@ -1,8 +1,7 @@
 {
   "name": "ember-cli-pull-to-refresh",
   "version": "0.0.0",
-  "private": true,
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "A pull-to-refresh plugin for Ember CLI apps.",
   "directories": {
     "doc": "doc",
     "test": "tests"
