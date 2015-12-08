@@ -1,0 +1,7 @@
+.pull-to-refresh-parent {
+  position: relative;
+}
+
+.pull-to-refresh-child {
+  position: relative;
+}

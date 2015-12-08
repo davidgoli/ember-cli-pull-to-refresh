@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+  classNames: 'pull-to-refresh-parent',
   threshold: 50,
   _startY: 0,
 
@@ -10,11 +11,11 @@ export default Ember.Component.extend({
 
   touchMove(e) {
     let dy = e.pageY - this.get('_startY');
-    this.$().attr('style', `top: ${dy}px;`);
+    this.$('.pull-to-refresh-child').attr('style', `top: ${dy}px;`);
   },
 
   touchEnd() {
-    this.$().attr('style', 'top: 0px;');
+    this.$('.pull-to-refresh-child').attr('style', 'top: 0px;');
     this.set('_startY', undefined);
   }
 });

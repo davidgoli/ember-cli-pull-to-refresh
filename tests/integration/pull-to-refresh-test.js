@@ -20,30 +20,33 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   integration: true,
   setup() {
     App = startApp();
-    this.render(hbs`{{pull-to-refresh}}`);
+    this.render(hbs`{{#pull-to-refresh}}<div class="pull-to-refresh-child"/>{{/pull-to-refresh}}`);
   },
   teardown() {
     Ember.run(App, 'destroy');
   }
 });
 
-test('pulling down', function (assert) {
+test('rendering', function (assert) {
   assert.equal(this.$().length, 1);
   assert.equal(this.$().attr('style'), undefined);
+  assert.equal(this.$('.pull-to-refresh-child').length, 1);
+});
 
-  this.$('div').trigger(touchEventY('touchstart', 80));
-  this.$('div').trigger(touchEventY('touchmove', 90));
+test('pulling down', function (assert) {
+  this.$('.pull-to-refresh-child').trigger(touchEventY('touchstart', 80));
+  this.$('.pull-to-refresh-child').trigger(touchEventY('touchmove', 90));
 
-  assert.equal(this.$('div').attr('style'), 'top: 10px;');
+  assert.equal(this.$('.pull-to-refresh-child').attr('style'), 'top: 10px;');
 });
 
 test('letting go', function (assert) {
-  this.$('div').trigger(touchEventY('touchstart', 80));
-  this.$('div').trigger(touchEventY('touchmove', 90));
+  this.$('.pull-to-refresh-child').trigger(touchEventY('touchstart', 80));
+  this.$('.pull-to-refresh-child').trigger(touchEventY('touchmove', 90));
 
-  assert.equal(this.$('div').attr('style'), 'top: 10px;');
+  assert.equal(this.$('.pull-to-refresh-child').attr('style'), 'top: 10px;');
 
-  this.$('div').trigger(touchEventY('touchend', 0));
+  this.$('.pull-to-refresh-child').trigger(touchEventY('touchend', 0));
 
-  assert.equal(this.$('div').attr('style'), 'top: 0px;');
+  assert.equal(this.$('.pull-to-refresh-child').attr('style'), 'top: 0px;');
 });
