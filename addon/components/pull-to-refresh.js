@@ -69,9 +69,8 @@ export default Ember.Component.extend({
   _end() {
     const threshold = this.get('threshold');
     const loading = this.get('_dy') >= threshold;
-    const top = loading ? threshold : 0;
 
-    this.$('.pull-to-refresh-child').attr('style', `top: ${top}px;`);
+    this.$('.pull-to-refresh-child').attr('style', `top: 0px;`);
     this.set('_startY', undefined);
     this.set('_lastY', undefined);
     this.set('loading', loading);

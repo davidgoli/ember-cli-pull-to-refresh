@@ -70,21 +70,26 @@ test('snapping back', function () {
 
   this.letGo();
 
-  this.expectTop(50);
+  this.expectTop(0);
   this.isLoading(true);
 });
 
 test('pulling down when loading', function () {
   this.pullDown(80, 130);
   this.letGo();
-  this.expectTop(50);
+  this.expectTop(0);
   this.isLoading(true);
 
   this.pullDown(80, 200);
-  this.expectTop(50);
+  this.expectTop(0);
+  this.isLoading(true);
 });
 
 test('overpulling', function () {
   this.pullDown(80, 280);
   this.expectTop(180);
+
+  this.letGo();
+
+  this.isLoading(true);
 });
