@@ -3,7 +3,54 @@
 
 # Ember-cli-pull-to-refresh
 
-This README outlines the details of collaborating on this Ember addon.
+A simple pull-to-refresh component for wrapping Ember CLI components.
+
+## Usage
+
+This component is meant to wrap the content being refreshed:
+
+```hbs
+{{#pull-to-refresh
+  refresh='refresh'
+  threshold=50
+  loading=loading
+}}
+  {{loading-component}}
+  <div>
+    {{content-component model=model}}
+  </div>
+{{/pull-to-refresh}}
+```
+
+When the user drags the `pull-to-refresh` component down past the `threshold`
+(default 50 pixels), the component sends a `refresh` action and enters the
+`loading` state. Your route can handle this action, fetch data from the server,
+then set the controller's `loading` property to `false` to reset to the default
+state. That's pretty much it!
+
+No default styling is provided yet. The following default styles are recommended:
+
+```sass
+// position: relative or position: absolute
+// is required for the pull-down animation
+.pull-to-refresh-parent
+  position: relative
+
+  .pull-to-refresh-child
+    position: relative
+
+  // Replace .loading-component with your
+  // loading component's class name
+  & .loading-component
+    visibility: hidden
+    height: 0
+
+  // When pull-to-refresh is in the "loading" state,
+  // it has a .loading class
+  &.loading .loading-component
+    visibility: visible
+    height: rem-calc(50)
+```
 
 ## Installation
 
