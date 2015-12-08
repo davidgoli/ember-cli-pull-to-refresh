@@ -21,8 +21,9 @@ export default Ember.Component.extend({
       return;
     }
 
-    this.set('_startY', e.pageY);
-    this.set('_lastY', e.pageY);
+    const y = e.originalEvent.targetTouches[0].pageY;
+    this.set('_startY', y);
+    this.set('_lastY', y);
   },
 
 
@@ -43,7 +44,8 @@ export default Ember.Component.extend({
       return;
     }
 
-    this.set('_lastY', e.pageY);
+    const y = e.originalEvent.targetTouches[0].pageY;
+    this.set('_lastY', y);
     const dy = Math.min(
       this.get('_dy'),
       (this.get('threshold') * 2) + this.get('_startY')

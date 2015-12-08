@@ -7,9 +7,8 @@ var App;
 
 function touchEventY(type, y) {
   return new $.Event(type, {
-    pageY: y,
     originalEvent: {
-      touches: [{
+      targetTouches: [{
         pageY: y
       }]
     }
