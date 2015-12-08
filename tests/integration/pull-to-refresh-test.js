@@ -20,7 +20,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   integration: true,
   setup(assert) {
     App = startApp();
-    this.render(hbs`{{#pull-to-refresh}}<div class="pull-to-refresh-child"/>{{/pull-to-refresh}}`);
+    this.render(hbs`{{pull-to-refresh}}`);
 
     this.pullDown = (start, end) => {
       this.$('.pull-to-refresh-child').trigger(touchEventY('touchstart', start));

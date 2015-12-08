@@ -5,10 +5,18 @@ export default Ember.Component.extend({
   classNameBindings: ['loading'],
   threshold: 50,
   loading: false,
-  _startY: 0,
-  _lastY: 0,
+  _startY: undefined,
+  _lastY: undefined,
 
   touchStart(e) {
+    this._start(e);
+  },
+
+  mouseDown(e) {
+    this._start(e);
+  },
+
+  _start(e) {
     if (this.get('loading')) {
       return;
     }
@@ -17,7 +25,20 @@ export default Ember.Component.extend({
     this.set('_lastY', e.pageY);
   },
 
+
   touchMove(e) {
+    this._move(e);
+  },
+
+  mouseMove(e) {
+    if (typeof this.get('_startY') === undefined) {
+      return;
+    }
+
+    this._move(e);
+  },
+
+  _move(e) {
     if (this.get('loading')) {
       return;
     }
@@ -32,6 +53,18 @@ export default Ember.Component.extend({
   },
 
   touchEnd() {
+    this._end();
+  },
+
+  mouseUp() {
+    this._end();
+  },
+
+  mouseOut() {
+    this._end();
+  },
+
+  _end() {
     const threshold = this.get('threshold');
     const loading = this.get('_dy') >= threshold;
     const top = loading ? threshold : 0;
