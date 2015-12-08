@@ -11,5 +11,10 @@ export default Ember.Component.extend({
   touchMove(e) {
     let dy = e.pageY - this.get('_startY');
     this.$().attr('style', `top: ${dy}px;`);
+  },
+
+  touchEnd() {
+    this.$().attr('style', 'top: 0px;');
+    this.set('_startY', undefined);
   }
 });
