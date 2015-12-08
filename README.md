@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh.svg?branch=master)](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh)
+
 # Ember-cli-pull-to-refresh
 
 This README outlines the details of collaborating on this Ember addon.
