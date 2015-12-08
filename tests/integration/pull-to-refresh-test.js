@@ -34,6 +34,11 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     this.expectTop = (top) => {
       assert.equal(this.$('.pull-to-refresh-child').attr('style'), `top: ${top}px;`);
     };
+
+    this.isLoading = (loading) => {
+      let method = loading ? 'ok' : 'notOk';
+      assert[method](this.$('.pull-to-refresh-parent').hasClass('loading'));
+    };
   },
   teardown() {
     Ember.run(App, 'destroy');
@@ -58,6 +63,7 @@ test('letting go', function () {
   this.letGo();
 
   this.expectTop(0);
+  this.isLoading(false);
 });
 
 test('snapping back', function () {
@@ -65,5 +71,16 @@ test('snapping back', function () {
 
   this.letGo();
 
+  this.expectTop(50);
+  this.isLoading(true);
+});
+
+test('pulling down when loading', function () {
+  this.pullDown(80, 130);
+  this.letGo();
+  this.expectTop(50);
+  this.isLoading(true);
+
+  this.pullDown(80, 200);
   this.expectTop(50);
 });
