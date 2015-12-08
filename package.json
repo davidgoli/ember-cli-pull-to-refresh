@@ -38,7 +38,9 @@
     "ember-try": "~0.0.8"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "pull-to-refresh",
+    "refresh"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.5"
