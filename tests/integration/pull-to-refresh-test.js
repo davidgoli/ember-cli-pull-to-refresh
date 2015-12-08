@@ -84,3 +84,8 @@ test('pulling down when loading', function () {
   this.pullDown(80, 200);
   this.expectTop(50);
 });
+
+test('overpulling', function () {
+  this.pullDown(80, 280);
+  this.expectTop(180);
+});

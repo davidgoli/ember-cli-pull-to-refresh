@@ -23,8 +23,12 @@ export default Ember.Component.extend({
     }
 
     this.set('_lastY', e.pageY);
+    const dy = Math.min(
+      this.get('_dy'),
+      (this.get('threshold') * 2) + this.get('_startY')
+    );
 
-    this.$('.pull-to-refresh-child').attr('style', `top: ${this.get('_dy')}px;`);
+    this.$('.pull-to-refresh-child').attr('style', `top: ${dy}px;`);
   },
 
   touchEnd() {
