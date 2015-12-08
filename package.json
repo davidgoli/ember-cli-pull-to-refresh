@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-pull-to-refresh",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A pull-to-refresh plugin for Ember CLI apps.",
   "directories": {
     "doc": "doc",
