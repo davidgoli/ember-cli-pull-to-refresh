@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   },
 
   _move(e) {
-    if (this.get('loading')) {
+    if (this.get('loading') || typeof this.get('_startY') === 'undefined') {
       return;
     }
 
@@ -67,6 +67,10 @@ export default Ember.Component.extend({
   },
 
   _end() {
+    if (typeof this.get('_startY') === 'undefined') {
+      return;
+    }
+
     const threshold = this.get('threshold');
     const loading = this.get('_dy') >= threshold;
 
