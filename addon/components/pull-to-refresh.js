@@ -22,22 +22,23 @@ export default Ember.Component.extend({
       return;
     }
 
-    const currentY = e.pageY;
-    const dy = currentY - this.get('_startY');
-
     this.set('_lastY', e.pageY);
-    this.$('.pull-to-refresh-child').attr('style', `top: ${dy}px;`);
+
+    this.$('.pull-to-refresh-child').attr('style', `top: ${this.get('_dy')}px;`);
   },
 
   touchEnd() {
-    const dy = this.get('_lastY') - this.get('_startY');
     const threshold = this.get('threshold');
-    const loading = dy >= threshold;
+    const loading = this.get('_dy') >= threshold;
     const top = loading ? threshold : 0;
 
     this.$('.pull-to-refresh-child').attr('style', `top: ${top}px;`);
     this.set('_startY', undefined);
     this.set('_lastY', undefined);
     this.set('loading', loading);
-  }
+  },
+
+  _dy: Ember.computed('_lastY', '_startY', function () {
+    return this.get('_lastY') - this.get('_startY');
+  })
 });
