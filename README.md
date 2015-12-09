@@ -28,6 +28,8 @@ When the user drags the `pull-to-refresh` component down past the `threshold`
 then set the controller's `refreshing` property to `false` to reset to the default
 state. That's pretty much it!
 
+Both mobile `touch` events and desktop-browser `mouse` events are supported.
+
 No default styling is provided yet. The following default styles are recommended:
 
 ```sass
