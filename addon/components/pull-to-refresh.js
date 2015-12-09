@@ -2,10 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: 'pull-to-refresh-parent',
-  classNameBindings: ['refreshing'],
+  classNameBindings: ['refreshing', 'pulling'],
   disableMouseEvents: false,
   threshold: 50,
   refreshing: false,
+  pulling: false,
   _startY: undefined,
   _lastY: undefined,
 
@@ -28,8 +29,11 @@ export default Ember.Component.extend({
       return;
     }
 
-    this.set('_startY', y);
-    this.set('_lastY', y);
+    this.setProperties({
+      _startY: y,
+      _lastY: y,
+      pulling: true
+    });
   },
 
 
@@ -44,14 +48,14 @@ export default Ember.Component.extend({
   },
 
   _move(y) {
-    if (this.get('refreshing') || typeof this.get('_startY') === 'undefined') {
+    if (this.get('refreshing') || !this.get('pulling')) {
       return;
     }
 
     this.set('_lastY', y);
     const dy = Math.min(
       this.get('_dy'),
-      (this.get('threshold') * 2) + this.get('_startY')
+      (this.get('threshold') * 2)
     );
 
     this._setTop(dy);
@@ -70,7 +74,7 @@ export default Ember.Component.extend({
   },
 
   _end() {
-    if (typeof this.get('_startY') === 'undefined') {
+    if (!this.get('pulling')) {
       return;
     }
 
@@ -81,7 +85,8 @@ export default Ember.Component.extend({
     this.setProperties({
       _startY: undefined,
       _lastY: undefined,
-      refreshing: refreshing
+      refreshing: refreshing,
+      pulling: false
     });
 
     if (refreshing) {

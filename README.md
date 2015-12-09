@@ -22,11 +22,12 @@ This component is meant to wrap the content being refreshed:
 ```
 
 When the user drags the `pull-to-refresh` component down past the `threshold`
-(default 50 pixels), the component sends a `refresh` action and enters the
-`refreshing` state. Your route can handle this action, fetch data from the server,
-then set the controller's `refreshing` property to `false` to reset to the default
-state. While in the `refreshing` state, the `.pull-to-refresh` element has a
-`.refreshing` class you can use for styling. That's pretty much it!
+(default 50 pixels), then lets go, the component sends a `refresh` action and
+enters the `refreshing` state. Your route can handle this action, fetch data
+from the server, then set the controller's `refreshing` property to `false` to
+reset to the default state. While in the `refreshing` state, the
+`.pull-to-refresh` element has a `.refreshing` class you can use for styling.
+When the user is pulling, it has a `.pulling` class. That's pretty much it!
 
 Both mobile `touch` events and desktop-browser `mouse` events are supported by
 default. Mouse events may be disabled by setting the property
