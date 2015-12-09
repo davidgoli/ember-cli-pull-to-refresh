@@ -91,7 +91,7 @@ export default Ember.Component.extend({
 
   _setTop(y) {
     this.$('.pull-to-refresh-child')
-      .attr('style', `-webkit-transform: translateY(${y}px); transform: translateY(${y}px);`);
+      .css('transform', `translateY(${y}px)`);
   },
 
   _dy: Ember.computed('_lastY', '_startY', function () {

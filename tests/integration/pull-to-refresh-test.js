@@ -56,8 +56,8 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
 
     this.expectTop = (top) => {
       assert.equal(
-        this.$('.pull-to-refresh-child').attr('style'),
-        `-webkit-transform: translateY(${top}px); transform: translateY(${top}px);`
+        this.$('.pull-to-refresh-child').css('transform'),
+        `matrix(1, 0, 0, 1, 0, ${top})`
       );
     };
 
