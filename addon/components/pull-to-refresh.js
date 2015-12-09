@@ -9,42 +9,40 @@ export default Ember.Component.extend({
   _lastY: undefined,
 
   touchStart(e) {
-    this._start(e);
+    const y = e.originalEvent.targetTouches[0].pageY;
+    this._start(y);
   },
 
   mouseDown(e) {
-    this._start(e);
+    const y = e.pageY;
+    this._start(y);
   },
 
-  _start(e) {
+  _start(y) {
     if (this.get('refreshing')) {
       return;
     }
 
-    const y = e.originalEvent.targetTouches[0].pageY;
     this.set('_startY', y);
     this.set('_lastY', y);
   },
 
 
   touchMove(e) {
-    this._move(e);
+    const y = e.originalEvent.targetTouches[0].pageY;
+    this._move(y);
   },
 
   mouseMove(e) {
-    if (typeof this.get('_startY') === undefined) {
-      return;
-    }
-
-    this._move(e);
+    const y = e.pageY;
+    this._move(y);
   },
 
-  _move(e) {
+  _move(y) {
     if (this.get('refreshing') || typeof this.get('_startY') === 'undefined') {
       return;
     }
 
-    const y = e.originalEvent.targetTouches[0].pageY;
     this.set('_lastY', y);
     const dy = Math.min(
       this.get('_dy'),
@@ -62,7 +60,7 @@ export default Ember.Component.extend({
     this._end();
   },
 
-  mouseOut() {
+  mouseLeave() {
     this._end();
   },
 

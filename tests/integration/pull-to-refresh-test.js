@@ -5,13 +5,19 @@ import Ember from 'ember';
 
 var App;
 
-function touchEventY(type, y) {
+function touchEvent(type, y) {
   return new $.Event(type, {
     originalEvent: {
       targetTouches: [{
         pageY: y
       }]
     }
+  });
+}
+
+function mouseEvent(type, y) {
+  return new $.Event(type, {
+    pageY: y
   });
 }
 
@@ -26,13 +32,26 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
       this.gotRefreshAction = true;
     });
 
-    this.pullDown = (start, end) => {
-      this.$('.pull-to-refresh-child').trigger(touchEventY('touchstart', start));
-      this.$('.pull-to-refresh-child').trigger(touchEventY('touchmove', end));
+    this.pullDown = (start, end, type='touch') => {
+      let startEvent = type === 'touch' ?
+        touchEvent('touchstart', start) : mouseEvent('mousedown', start);
+      let moveEvent = type === 'touch' ?
+        touchEvent('touchmove', end) : mouseEvent('mousemove', end);
+
+      this.$('.pull-to-refresh-child').trigger(startEvent);
+      this.$('.pull-to-refresh-child').trigger(moveEvent);
     };
 
-    this.letGo = () => {
-      this.$('.pull-to-refresh-child').trigger(touchEventY('touchend', 0));
+    this.letGo = (type='touch') => {
+      let endEvent = type === 'touch' ?
+        touchEvent('touchend') : mouseEvent('mouseup');
+
+      this.$('.pull-to-refresh-child').trigger(endEvent);
+    };
+
+    this.moveOut = () => {
+      let endEvent = mouseEvent('mouseleave');
+      this.$('.pull-to-refresh-child').trigger(endEvent);
     };
 
     this.expectTop = (top) => {
@@ -66,6 +85,24 @@ test('letting go', function () {
   this.pullDown(80, 90);
 
   this.letGo();
+
+  this.expectTop(0);
+  this.expectRefreshing(false);
+});
+
+test('letting go with a mouse', function () {
+  this.pullDown(80, 90, 'mouse');
+
+  this.letGo('mouse');
+
+  this.expectTop(0);
+  this.expectRefreshing(false);
+});
+
+test('moving out with a mouse', function () {
+  this.pullDown(80, 90, 'mouse');
+
+  this.moveOut();
 
   this.expectTop(0);
   this.expectRefreshing(false);
