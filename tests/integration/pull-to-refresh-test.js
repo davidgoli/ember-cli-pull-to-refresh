@@ -55,7 +55,10 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     };
 
     this.expectTop = (top) => {
-      assert.equal(this.$('.pull-to-refresh-child').attr('style'), `top: ${top}px;`);
+      assert.equal(
+        this.$('.pull-to-refresh-child').attr('style'),
+        `-webkit-transform: translateY(${top}px); transform: translateY(${top}px);`
+      );
     };
 
     this.expectRefreshing = (refreshing) => {
@@ -73,6 +76,7 @@ test('rendering', function (assert) {
   assert.equal(this.$().length, 1);
   assert.equal(this.$().attr('style'), undefined);
   assert.equal(this.$('.pull-to-refresh-child').length, 1);
+  assert.equal(this.$('.pull-to-refresh-child').attr('style'), undefined);
 });
 
 test('pulling down', function () {
@@ -97,6 +101,13 @@ test('letting go with a mouse', function () {
 
   this.expectTop(0);
   this.expectRefreshing(false);
+});
+
+test('pulling down with a mouse, when not supported', function (assert) {
+  this.render(hbs`{{pull-to-refresh disableMouseEvents=true}}`);
+  this.pullDown(80, 90, 'mouse');
+
+  assert.equal(this.$('.pull-to-refresh-child').attr('style'), undefined);
 });
 
 test('moving out with a mouse', function () {

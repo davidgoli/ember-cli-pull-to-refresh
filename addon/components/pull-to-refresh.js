@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   classNames: 'pull-to-refresh-parent',
   classNameBindings: ['refreshing'],
+  disableMouseEvents: false,
   threshold: 50,
   refreshing: false,
   _startY: undefined,
@@ -14,6 +15,10 @@ export default Ember.Component.extend({
   },
 
   mouseDown(e) {
+    if (this.get('disableMouseEvents')) {
+      return;
+    }
+
     const y = e.pageY;
     this._start(y);
   },
@@ -49,7 +54,7 @@ export default Ember.Component.extend({
       (this.get('threshold') * 2) + this.get('_startY')
     );
 
-    this.$('.pull-to-refresh-child').attr('style', `top: ${dy}px;`);
+    this._setTop(dy);
   },
 
   touchEnd() {
@@ -72,14 +77,21 @@ export default Ember.Component.extend({
     const threshold = this.get('threshold');
     const refreshing = this.get('_dy') >= threshold;
 
-    this.$('.pull-to-refresh-child').attr('style', `top: 0px;`);
-    this.set('_startY', undefined);
-    this.set('_lastY', undefined);
-    this.set('refreshing', refreshing);
+    this._setTop(0);
+    this.setProperties({
+      _startY: undefined,
+      _lastY: undefined,
+      refreshing: refreshing
+    });
 
     if (refreshing) {
       this.sendAction('refresh');
     }
+  },
+
+  _setTop(y) {
+    this.$('.pull-to-refresh-child')
+      .attr('style', `-webkit-transform: translateY(${y}px); transform: translateY(${y}px);`);
   },
 
   _dy: Ember.computed('_lastY', '_startY', function () {

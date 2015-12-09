@@ -15,6 +15,7 @@ This component is meant to wrap the content being refreshed:
   refresh='refresh'
   threshold=50
   refreshing=refreshing
+  disableMouseEvents=false
 }}
   {{loading-component}}
   <div>
@@ -29,7 +30,9 @@ When the user drags the `pull-to-refresh` component down past the `threshold`
 then set the controller's `refreshing` property to `false` to reset to the default
 state. That's pretty much it!
 
-Both mobile `touch` events and desktop-browser `mouse` events are supported.
+Both mobile `touch` events and desktop-browser `mouse` events are supported by
+default. Mouse events may be disabled by setting the property
+`disableMouseEvents` to `true`.
 
 No default styling is provided yet. The following default styles are recommended:
 
