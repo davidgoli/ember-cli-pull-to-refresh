@@ -39,10 +39,10 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
       assert.equal(this.$('.pull-to-refresh-child').attr('style'), `top: ${top}px;`);
     };
 
-    this.expectLoading = (loading) => {
-      let method = loading ? 'ok' : 'notOk';
-      assert[method](this.$('.pull-to-refresh-parent').hasClass('loading'));
-      assert.equal(this.gotRefreshAction, loading, 'refresh action sent');
+    this.expectRefreshing = (refreshing) => {
+      let method = refreshing ? 'ok' : 'notOk';
+      assert[method](this.$('.pull-to-refresh-parent').hasClass('refreshing'));
+      assert.equal(this.gotRefreshAction, refreshing, 'refresh action sent');
     };
   },
   teardown() {
@@ -68,7 +68,7 @@ test('letting go', function () {
   this.letGo();
 
   this.expectTop(0);
-  this.expectLoading(false);
+  this.expectRefreshing(false);
 });
 
 test('snapping back', function () {
@@ -77,21 +77,21 @@ test('snapping back', function () {
   this.letGo();
 
   this.expectTop(0);
-  this.expectLoading(true);
+  this.expectRefreshing(true);
 });
 
-test('pulling down when loading', function () {
+test('pulling down when refreshing', function () {
   this.pullDown(80, 130);
   this.letGo();
   this.expectTop(0);
-  this.expectLoading(true);
+  this.expectRefreshing(true);
 
   this.pullDown(80, 200);
   this.expectTop(0);
-  this.expectLoading(true);
+  this.expectRefreshing(true);
 
   this.letGo();
-  this.expectLoading(true);
+  this.expectRefreshing(true);
 });
 
 test('overpulling', function () {
@@ -100,5 +100,5 @@ test('overpulling', function () {
 
   this.letGo();
 
-  this.expectLoading(true);
+  this.expectRefreshing(true);
 });

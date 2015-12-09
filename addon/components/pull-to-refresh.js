@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   classNames: 'pull-to-refresh-parent',
-  classNameBindings: ['loading'],
+  classNameBindings: ['refreshing'],
   threshold: 50,
-  loading: false,
+  refreshing: false,
   _startY: undefined,
   _lastY: undefined,
 
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
   },
 
   _start(e) {
-    if (this.get('loading')) {
+    if (this.get('refreshing')) {
       return;
     }
 
@@ -40,7 +40,7 @@ export default Ember.Component.extend({
   },
 
   _move(e) {
-    if (this.get('loading') || typeof this.get('_startY') === 'undefined') {
+    if (this.get('refreshing') || typeof this.get('_startY') === 'undefined') {
       return;
     }
 
@@ -72,14 +72,14 @@ export default Ember.Component.extend({
     }
 
     const threshold = this.get('threshold');
-    const loading = this.get('_dy') >= threshold;
+    const refreshing = this.get('_dy') >= threshold;
 
     this.$('.pull-to-refresh-child').attr('style', `top: 0px;`);
     this.set('_startY', undefined);
     this.set('_lastY', undefined);
-    this.set('loading', loading);
+    this.set('refreshing', refreshing);
 
-    if (loading) {
+    if (refreshing) {
       this.sendAction('refresh');
     }
   },

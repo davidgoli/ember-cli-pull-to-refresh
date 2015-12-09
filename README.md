@@ -13,7 +13,7 @@ This component is meant to wrap the content being refreshed:
 {{#pull-to-refresh
   refresh='refresh'
   threshold=50
-  loading=loading
+  refreshing=refreshing
 }}
   {{loading-component}}
   <div>
@@ -24,8 +24,8 @@ This component is meant to wrap the content being refreshed:
 
 When the user drags the `pull-to-refresh` component down past the `threshold`
 (default 50 pixels), the component sends a `refresh` action and enters the
-`loading` state. Your route can handle this action, fetch data from the server,
-then set the controller's `loading` property to `false` to reset to the default
+`refreshing` state. Your route can handle this action, fetch data from the server,
+then set the controller's `refreshing` property to `false` to reset to the default
 state. That's pretty much it!
 
 No default styling is provided yet. The following default styles are recommended:
@@ -45,9 +45,9 @@ No default styling is provided yet. The following default styles are recommended
     visibility: hidden
     height: 0
 
-  // When pull-to-refresh is in the "loading" state,
-  // it has a .loading class
-  &.loading .loading-component
+  // When pull-to-refresh is in the "refreshing" state,
+  // it has a .refreshing class
+  &.refreshing .loading-component
     visibility: visible
     height: rem-calc(50)
 ```
