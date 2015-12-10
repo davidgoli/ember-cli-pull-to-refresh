@@ -181,6 +181,15 @@ test('overpulling', function () {
   this.expectRefreshing(true);
 });
 
+test('pulling up', function (assert) {
+  this.pullDown(80, 70);
+  assert.equal(
+    this.$('.pull-to-refresh-child').css('transform'),
+    'none'
+  );
+  this.expectPulling(false);
+});
+
 test('when scrollable is not at the top', function (assert) {
   this.render(hbs`
               <div class="fixed-wrapper">

@@ -8,7 +8,6 @@ export default Ember.Component.extend({
   disableMouseEvents: false,
   threshold: 50,
   refreshing: false,
-  pulling: false,
   _startY: undefined,
   _lastY: undefined,
 
@@ -27,19 +26,13 @@ export default Ember.Component.extend({
   },
 
   _start(y) {
-    if (this.get('refreshing')) {
-      return;
-    }
-
-    let scrollable = jQuery(this.get('scrollable'));
-    if (scrollable && scrollable.scrollTop() > 0) {
+    if (this.get('refreshing') || !this._canPullDown()) {
       return;
     }
 
     this.setProperties({
       _startY: y,
-      _lastY: y,
-      pulling: true
+      _lastY: y
     });
   },
 
@@ -55,11 +48,15 @@ export default Ember.Component.extend({
   },
 
   _move(y) {
-    if (this.get('refreshing') || !this.get('pulling')) {
+    if (this.get('refreshing') || !this.get('_startY')) {
       return;
     }
 
     this.set('_lastY', y);
+
+    if (!this.get('pulling')) {
+      return;
+    }
 
     const dy = Math.min(
       this.get('_dy'),
@@ -82,7 +79,7 @@ export default Ember.Component.extend({
   },
 
   _end() {
-    if (!this.get('pulling')) {
+    if (!this.get('_startY')) {
       return;
     }
 
@@ -93,8 +90,7 @@ export default Ember.Component.extend({
     this.setProperties({
       _startY: undefined,
       _lastY: undefined,
-      refreshing: refreshing,
-      pulling: false
+      refreshing: refreshing
     });
 
     if (refreshing) {
@@ -109,5 +105,24 @@ export default Ember.Component.extend({
 
   _dy: Ember.computed('_lastY', '_startY', function () {
     return this.get('_lastY') - this.get('_startY');
+  }),
+
+  _canPullDown() {
+    let scrollable = this.get('_scrollableEl');
+
+    if (!scrollable) {
+      scrollable = jQuery(this.get('scrollable'));
+
+      if (scrollable.length > 0) {
+        this.set('_scrollableEl', scrollable);
+      }
+    }
+
+    return (scrollable.length === 0 ||
+      scrollable.scrollTop() === 0);
+  },
+
+  pulling: Ember.computed('_startY', '_dy', function () {
+    return this.get('_startY') && this._canPullDown() && this.get('_dy') > 0;
   })
 });
