@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh.svg?branch=master)](https://travis-ci.org/davidgoli/ember-cli-pull-to-refresh)
+[![npm version](https://badge.fury.io/js/ember-cli-pull-to-refresh.svg)](https://badge.fury.io/js/ember-cli-pull-to-refresh)
 [![Code Climate](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh/badges/gpa.svg)](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh)
 [![Test Coverage](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh/badges/coverage.svg)](https://codeclimate.com/github/davidgoli/ember-cli-pull-to-refresh/coverage)
 
