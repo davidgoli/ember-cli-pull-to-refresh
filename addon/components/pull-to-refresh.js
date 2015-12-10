@@ -86,10 +86,14 @@ export default Ember.Component.extend({
     const threshold = this.get('threshold');
     const refreshing = this.get('_dy') >= threshold;
 
-    this.setProperties({
-      _startY: undefined,
-      _lastY: undefined,
-      refreshing: refreshing
+    Ember.run.once(() => {
+      this.setProperties({
+        _startY: undefined,
+        _lastY: undefined,
+        refreshing: refreshing
+      });
+
+      this._reset();
     });
 
     if (refreshing) {
