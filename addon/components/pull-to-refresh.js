@@ -86,7 +86,6 @@ export default Ember.Component.extend({
     const threshold = this.get('threshold');
     const refreshing = this.get('_dy') >= threshold;
 
-    this._setTop(0);
     this.setProperties({
       _startY: undefined,
       _lastY: undefined,
@@ -97,6 +96,15 @@ export default Ember.Component.extend({
       this.sendAction('refresh');
     }
   },
+
+  _reset: Ember.observer('refreshing', function () {
+    let top = 0;
+    if (this.get('refreshing')) {
+      top = this.get('threshold');
+    }
+
+    this._setTop(top);
+  }),
 
   _setTop(y) {
     this.$('.pull-to-refresh-child')

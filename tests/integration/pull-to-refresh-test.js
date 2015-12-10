@@ -25,7 +25,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   integration: true,
   setup(assert) {
     App = startApp();
-    this.render(hbs`{{pull-to-refresh refresh='refresh'}}`);
+    this.render(hbs`{{pull-to-refresh refresh='refresh' refreshing=refreshing}}`);
 
     this.gotRefreshAction = false;
     this.on('refresh', () => {
@@ -147,8 +147,11 @@ test('snapping back', function () {
   this.letGo();
 
   this.expectPulling(false);
-  this.expectTop(0);
+  this.expectTop(50);
   this.expectRefreshing(true);
+
+  this.set('refreshing', false);
+  this.expectTop(0);
 });
 
 test('pulling down when refreshing', function () {
@@ -156,13 +159,13 @@ test('pulling down when refreshing', function () {
   this.letGo();
 
   this.expectPulling(false);
-  this.expectTop(0);
+  this.expectTop(50);
   this.expectRefreshing(true);
 
   this.pullDown(80, 200);
 
   this.expectPulling(false);
-  this.expectTop(0);
+  this.expectTop(50);
   this.expectRefreshing(true);
 
   this.letGo();
