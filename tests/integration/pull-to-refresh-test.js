@@ -180,3 +180,31 @@ test('overpulling', function () {
   this.expectPulling(false);
   this.expectRefreshing(true);
 });
+
+test('when scrollable is not at the top', function (assert) {
+  this.render(hbs`
+              <div class="fixed-wrapper">
+                <ul class="scroll-container">
+                  {{#pull-to-refresh
+                    refresh='refresh'
+                    scrollable='.scroll-container'}}
+                    hello
+                  {{/pull-to-refresh}}
+                </ul>
+              </div>
+              `);
+
+  let scrollContainer = $('.scroll-container');
+  this.$('.pull-to-refresh-child').css('height', '100px');
+  $('.fixed-wrapper').css('overflow', 'hidden');
+  scrollContainer.css({'height': '50px', 'overflow-y': 'scroll'});
+
+  scrollContainer.scrollTop(20);
+
+  this.pullDown(80, 90);
+  assert.equal(
+    this.$('.pull-to-refresh-child').css('transform'),
+    'none'
+  );
+  this.expectPulling(false);
+});

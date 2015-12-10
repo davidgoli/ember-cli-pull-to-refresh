@@ -1,8 +1,10 @@
 import Ember from 'ember';
+import jQuery from 'jquery';
 
 export default Ember.Component.extend({
   classNames: 'pull-to-refresh-parent',
   classNameBindings: ['refreshing', 'pulling'],
+  scrollable: undefined,
   disableMouseEvents: false,
   threshold: 50,
   refreshing: false,
@@ -26,6 +28,11 @@ export default Ember.Component.extend({
 
   _start(y) {
     if (this.get('refreshing')) {
+      return;
+    }
+
+    let scrollable = jQuery(this.get('scrollable'));
+    if (scrollable && scrollable.scrollTop() > 0) {
       return;
     }
 
@@ -53,6 +60,7 @@ export default Ember.Component.extend({
     }
 
     this.set('_lastY', y);
+
     const dy = Math.min(
       this.get('_dy'),
       (this.get('threshold') * 2)

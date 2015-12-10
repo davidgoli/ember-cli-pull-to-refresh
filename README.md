@@ -15,6 +15,7 @@ This component is meant to wrap the content being refreshed:
   refresh='refresh'
   threshold=50
   refreshing=refreshing
+  scrollable='.some-selector'
   disableMouseEvents=false
 }}
   {{! render your model here }}
@@ -28,6 +29,9 @@ from the server, then set the controller's `refreshing` property to `false` to
 reset to the default state. While in the `refreshing` state, the
 `.pull-to-refresh` element has a `.refreshing` class you can use for styling.
 When the user is pulling, it has a `.pulling` class. That's pretty much it!
+
+Provide a `scrollable` selector that indicates the scrolling area being
+observed, in order to enable normal scrolling behavior when not at the top.
 
 Both mobile `touch` events and desktop-browser `mouse` events are supported by
 default. Mouse events may be disabled by setting the property
