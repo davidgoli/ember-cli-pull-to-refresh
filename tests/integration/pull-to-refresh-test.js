@@ -33,26 +33,32 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     });
 
     this.pullDown = (start, end, type='touch') => {
-      let startEvent = type === 'touch' ?
-        touchEvent('touchstart', start) : mouseEvent('mousedown', start);
-      let moveEvent = type === 'touch' ?
-        touchEvent('touchmove', end) : mouseEvent('mousemove', end);
+      Ember.run(() => {
+        let startEvent = type === 'touch' ?
+          touchEvent('touchstart', start) : mouseEvent('mousedown', start);
+        let moveEvent = type === 'touch' ?
+          touchEvent('touchmove', end) : mouseEvent('mousemove', end);
 
-      this.$('.pull-to-refresh-child').trigger(startEvent);
-      this.$('.pull-to-refresh-child').trigger(moveEvent);
+        this.$('.pull-to-refresh-child').trigger(startEvent);
+        this.$('.pull-to-refresh-child').trigger(moveEvent);
+      });
     };
 
     this.letGo = (type='touch') => {
-      let endEvent = type === 'touch' ?
-        touchEvent('touchend') : mouseEvent('mouseup');
+      Ember.run(() => {
+        let endEvent = type === 'touch' ?
+          touchEvent('touchend') : mouseEvent('mouseup');
 
-      this.$('.pull-to-refresh-child').trigger(endEvent);
+        this.$('.pull-to-refresh-child').trigger(endEvent);
+      });
     };
 
     this.moveOut = () => {
-      let endEvent = mouseEvent('mouseleave');
+      Ember.run(() => {
+        let endEvent = mouseEvent('mouseleave');
 
-      this.$('.pull-to-refresh-child').trigger(endEvent);
+        this.$('.pull-to-refresh-child').trigger(endEvent);
+      });
     };
 
     this.expectTop = (top) => {

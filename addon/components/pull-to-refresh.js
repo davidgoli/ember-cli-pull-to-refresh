@@ -11,12 +11,37 @@ export default Ember.Component.extend({
   _startY: undefined,
   _lastY: undefined,
 
-  touchStart(e) {
+  init() {
+    this._super();
+    this.guid = Ember.guidFor(this);
+  },
+
+  didInsertElement() {
+    this.$().on(`touchstart.${this.guid}`, this._touchStart.bind(this));
+    this.$().on(`touchmove.${this.guid}`, this._touchMove.bind(this));
+    this.$().on(`touchend.${this.guid}`, this._touchEnd.bind(this));
+    this.$().on(`mousedown.${this.guid}`, this._mouseDown.bind(this));
+    this.$().on(`mousemove.${this.guid}`, this._mouseMove.bind(this));
+    this.$().on(`mouseup.${this.guid}`, this._mouseUp.bind(this));
+    this.$().on(`mouseleave.${this.guid}`, this._mouseLeave.bind(this));
+  },
+
+  willDestroyElement() {
+    this.$().off(`touchstart.${this.guid}`);
+    this.$().off(`touchmove.${this.guid}`);
+    this.$().off(`touchend.${this.guid}`);
+    this.$().off(`mousedown.${this.guid}`);
+    this.$().off(`mousemove.${this.guid}`);
+    this.$().off(`mouseup.${this.guid}`);
+    this.$().off(`mouseleave.${this.guid}`);
+  },
+
+  _touchStart(e) {
     const y = e.originalEvent.targetTouches[0].pageY;
     this._start(y);
   },
 
-  mouseDown(e) {
+  _mouseDown(e) {
     if (this.get('disableMouseEvents')) {
       return;
     }
@@ -37,12 +62,12 @@ export default Ember.Component.extend({
   },
 
 
-  touchMove(e) {
+  _touchMove(e) {
     const y = e.originalEvent.targetTouches[0].pageY;
     this._move(y);
   },
 
-  mouseMove(e) {
+  _mouseMove(e) {
     const y = e.pageY;
     this._move(y);
   },
@@ -66,15 +91,15 @@ export default Ember.Component.extend({
     this._setTop(dy);
   },
 
-  touchEnd() {
+  _touchEnd() {
     this._end();
   },
 
-  mouseUp() {
+  _mouseUp() {
     this._end();
   },
 
-  mouseLeave() {
+  _mouseLeave() {
     this._end();
   },
 
