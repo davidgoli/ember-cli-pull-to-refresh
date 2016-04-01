@@ -13,6 +13,13 @@ module.exports = function(defaults) {
     This build file does *not* influence how the addon or the app using it
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
+  if (!process.env.EMBER_CLI_FASTBOOT) {
+    if (app.env === "production") {
+      app.import(app.bowerDirectory + '/hammerjs/hammer.min.js');
+    } else {
+      app.import(app.bowerDirectory + '/hammerjs/hammer.js');
+    }
+  }
 
   return app.toTree();
 };
