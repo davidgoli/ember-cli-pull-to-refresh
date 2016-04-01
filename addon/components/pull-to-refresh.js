@@ -28,7 +28,7 @@ export default Ember.Component.extend({
           break;
         case "panmove":
           this._move(ev.center.y);
-          break
+          break;
         case "panend":
         case "pancancel":
           this._end();
