@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-pull-to-refresh",
-  "version": "0.0.14",
+  "version": "0.1.0",
   "description": "A pull-to-refresh plugin for Ember CLI apps.",
   "directories": {
     "doc": "doc",
@@ -45,7 +45,8 @@
   ],
   "dependencies": {
     "ember-cli-babel": "^5.1.5",
-    "ember-cli-htmlbars": "^1.0.1"
+    "ember-cli-htmlbars": "^1.0.1",
+    "hammerjs": "^2.0.6"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
