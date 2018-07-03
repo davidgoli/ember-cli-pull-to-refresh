@@ -1,12 +1,13 @@
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { test, moduleForComponent } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 
 var App;
 
 function touchEvent(type, y) {
-  return new Ember.$.Event(type, {
+  return new $.Event(type, {
     originalEvent: {
       targetTouches: [{
         pageY: y
@@ -16,7 +17,7 @@ function touchEvent(type, y) {
 }
 
 function mouseEvent(type, y) {
-  return new Ember.$.Event(type, {
+  return new $.Event(type, {
     pageY: y
   });
 }
@@ -33,7 +34,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     });
 
     this.pullDown = (start, end, type='touch') => {
-      Ember.run(() => {
+      run(() => {
         let startEvent = type === 'touch' ?
           touchEvent('touchstart', start) : mouseEvent('mousedown', start);
         let moveEvent = type === 'touch' ?
@@ -45,7 +46,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     };
 
     this.letGo = (type='touch') => {
-      Ember.run(() => {
+      run(() => {
         let endEvent = type === 'touch' ?
           touchEvent('touchend') : mouseEvent('mouseup');
 
@@ -54,7 +55,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     };
 
     this.moveOut = () => {
-      Ember.run(() => {
+      run(() => {
         let endEvent = mouseEvent('mouseleave');
 
         this.$('.pull-to-refresh-child').trigger(endEvent);
@@ -83,7 +84,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   },
 
   teardown() {
-    Ember.run(App, 'destroy');
+    run(App, 'destroy');
   }
 });
 
@@ -212,9 +213,9 @@ test('when scrollable is not at the top', function (assert) {
               </div>
               `);
 
-  let scrollContainer = Ember.$('.scroll-container');
+  let scrollContainer = $('.scroll-container');
   this.$('.pull-to-refresh-child').css('height', '100px');
-  Ember.$('.fixed-wrapper').css('overflow', 'hidden');
+  $('.fixed-wrapper').css('overflow', 'hidden');
   scrollContainer.css({'height': '50px', 'overflow-y': 'scroll'});
 
   scrollContainer.scrollTop(20);

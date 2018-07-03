@@ -1,7 +1,10 @@
-import Ember from 'ember';
+import { observer, computed } from '@ember/object';
+import { once } from '@ember/runloop';
+import { guidFor } from '@ember/object/internals';
+import Component from '@ember/component';
 import jQuery from 'jquery';
 
-export default Ember.Component.extend({
+export default Component.extend({
   classNames: 'pull-to-refresh-parent',
   classNameBindings: ['refreshing', 'pulling'],
   scrollable: undefined,
@@ -13,7 +16,7 @@ export default Ember.Component.extend({
 
   init() {
     this._super();
-    this.guid = Ember.guidFor(this);
+    this.guid = guidFor(this);
   },
 
   didInsertElement() {
@@ -111,7 +114,7 @@ export default Ember.Component.extend({
     const threshold = this.get('threshold');
     const refreshing = this.get('_dy') >= threshold;
 
-    Ember.run.once(() => {
+    once(() => {
       this.setProperties({
         _startY: undefined,
         _lastY: undefined,
@@ -126,7 +129,7 @@ export default Ember.Component.extend({
     }
   },
 
-  _reset: Ember.observer('refreshing', function () {
+  _reset: observer('refreshing', function () {
     let top = 0;
     if (this.get('refreshing')) {
       top = this.get('threshold');
@@ -140,7 +143,7 @@ export default Ember.Component.extend({
       .css('transform', `translate3d(0, ${y}px, 0)`);
   },
 
-  _dy: Ember.computed('_lastY', '_startY', function () {
+  _dy: computed('_lastY', '_startY', function () {
     return this.get('_lastY') - this.get('_startY');
   }),
 
@@ -159,7 +162,7 @@ export default Ember.Component.extend({
       scrollable.scrollTop() === 0);
   },
 
-  pulling: Ember.computed('_startY', '_dy', function () {
+  pulling: computed('_startY', '_dy', function () {
     return this.get('_startY') && this._canPullDown() && this.get('_dy') > 0;
   })
 });
