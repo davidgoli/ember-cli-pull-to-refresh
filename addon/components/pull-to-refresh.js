@@ -19,32 +19,12 @@ export default Component.extend({
     this.guid = guidFor(this);
   },
 
-  didInsertElement() {
-    this.$().on(`touchstart.${this.guid}`, this._touchStart.bind(this));
-    this.$().on(`touchmove.${this.guid}`, this._touchMove.bind(this));
-    this.$().on(`touchend.${this.guid}`, this._touchEnd.bind(this));
-    this.$().on(`mousedown.${this.guid}`, this._mouseDown.bind(this));
-    this.$().on(`mousemove.${this.guid}`, this._mouseMove.bind(this));
-    this.$().on(`mouseup.${this.guid}`, this._mouseUp.bind(this));
-    this.$().on(`mouseleave.${this.guid}`, this._mouseLeave.bind(this));
-  },
-
-  willDestroyElement() {
-    this.$().off(`touchstart.${this.guid}`);
-    this.$().off(`touchmove.${this.guid}`);
-    this.$().off(`touchend.${this.guid}`);
-    this.$().off(`mousedown.${this.guid}`);
-    this.$().off(`mousemove.${this.guid}`);
-    this.$().off(`mouseup.${this.guid}`);
-    this.$().off(`mouseleave.${this.guid}`);
-  },
-
-  _touchStart(e) {
+  touchStart(e) {
     const y = e.originalEvent.targetTouches[0].pageY;
     this._start(y);
   },
 
-  _mouseDown(e) {
+  mouseDown(e) {
     if (this.get('disableMouseEvents')) {
       return;
     }
@@ -65,12 +45,12 @@ export default Component.extend({
   },
 
 
-  _touchMove(e) {
+  touchMove(e) {
     const y = e.originalEvent.targetTouches[0].pageY;
     this._move(y);
   },
 
-  _mouseMove(e) {
+  mouseMove(e) {
     const y = e.pageY;
     this._move(y);
   },
@@ -94,15 +74,15 @@ export default Component.extend({
     this._setTop(dy);
   },
 
-  _touchEnd() {
+  touchEnd() {
     this._end();
   },
 
-  _mouseUp() {
+  mouseUp() {
     this._end();
   },
 
-  _mouseLeave() {
+  mouseLeave() {
     this._end();
   },
 
