@@ -6,7 +6,7 @@ import Ember from 'ember';
 var App;
 
 function touchEvent(type, y) {
-  return new $.Event(type, {
+  return new Ember.$.Event(type, {
     originalEvent: {
       targetTouches: [{
         pageY: y
@@ -16,7 +16,7 @@ function touchEvent(type, y) {
 }
 
 function mouseEvent(type, y) {
-  return new $.Event(type, {
+  return new Ember.$.Event(type, {
     pageY: y
   });
 }
@@ -212,9 +212,9 @@ test('when scrollable is not at the top', function (assert) {
               </div>
               `);
 
-  let scrollContainer = $('.scroll-container');
+  let scrollContainer = Ember.$('.scroll-container');
   this.$('.pull-to-refresh-child').css('height', '100px');
-  $('.fixed-wrapper').css('overflow', 'hidden');
+  Ember.$('.fixed-wrapper').css('overflow', 'hidden');
   scrollContainer.css({'height': '50px', 'overflow-y': 'scroll'});
 
   scrollContainer.scrollTop(20);
