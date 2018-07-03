@@ -43,7 +43,6 @@ default. Mouse events may be disabled by setting the property
 * `git clone <repository-url>` this repository
 * `cd my-addon`
 * `npm install`
-* `bower install`
 
 ## Running
 
