@@ -35,8 +35,8 @@ matrix:
     - env: EMBER_TRY_SCENARIO=ember-canary
 
 before_script:
-  - sudo chown root /opt/google/chrome/chrome-sandbox
-  - sudo chmod 4755 /opt/google/chrome/chrome-sandbox
+  - "sudo chown root /opt/google/chrome/chrome-sandbox"
+  - "sudo chmod 4755 /opt/google/chrome/chrome-sandbox"
 
 before_install:
   - npm config set spin false
