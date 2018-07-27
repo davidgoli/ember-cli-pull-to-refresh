@@ -1,7 +1,8 @@
+import { run } from '@ember/runloop';
+import $ from 'jquery';
 import { test, moduleForComponent } from 'ember-qunit';
 import startApp from '../helpers/start-app';
 import hbs from 'htmlbars-inline-precompile';
-import Ember from 'ember';
 
 var App;
 
@@ -33,7 +34,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     });
 
     this.pullDown = (start, end, type='touch') => {
-      Ember.run(() => {
+      run(() => {
         let startEvent = type === 'touch' ?
           touchEvent('touchstart', start) : mouseEvent('mousedown', start);
         let moveEvent = type === 'touch' ?
@@ -45,7 +46,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     };
 
     this.letGo = (type='touch') => {
-      Ember.run(() => {
+      run(() => {
         let endEvent = type === 'touch' ?
           touchEvent('touchend') : mouseEvent('mouseup');
 
@@ -54,7 +55,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
     };
 
     this.moveOut = () => {
-      Ember.run(() => {
+      run(() => {
         let endEvent = mouseEvent('mouseleave');
 
         this.$('.pull-to-refresh-child').trigger(endEvent);
@@ -83,7 +84,7 @@ moduleForComponent('pull-to-refresh', 'PullToRefresh', {
   },
 
   teardown() {
-    Ember.run(App, 'destroy');
+    run(App, 'destroy');
   }
 });
 

@@ -1,7 +1,8 @@
 import resolver from './helpers/resolver';
 import {
   setResolver
-} from 'ember-qunit';
+} from '@ember/test-helpers';
+import { start } from 'ember-cli-qunit';
 
 (function fnBindPolyfill() {
   if (typeof Function.prototype.bind === 'function') {
@@ -30,3 +31,4 @@ import {
 })();
 
 setResolver(resolver);
+start();
