@@ -134,20 +134,6 @@ export default Component.extend({
     return this.get('_lastY') - this.get('_startY');
   }),
 
-  // _canPullDown() {
-  //   let scrollable = this.get('_scrollableEl');
-
-  //   if (!scrollable) {
-  //     scrollable = this.element.querySelector(this.get('scrollable'));
-
-  //     if (scrollable) {
-  //       this.set('_scrollableEl', scrollable);
-  //     }
-  //   }
-
-  //   return (!scrollable || scrollable.scrollTop === 0);
-  // },
-
   _canPullDown() {
     let scrollable = this.get('_scrollableEl');
 
