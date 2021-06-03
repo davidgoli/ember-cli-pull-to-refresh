@@ -2143,6 +2143,13 @@ ember-export-application-global@^2.0.0:
   dependencies:
     ember-cli-babel "^6.0.0-beta.7"
 
+ember-jquery-legacy@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ember-jquery-legacy/-/ember-jquery-legacy-1.0.0.tgz#2a2a29109385dfabe4c626a3ac8d1dd3c6a4b9a3"
+  integrity sha1-KiopEJOF36vkxiajrI0d08akuaM=
+  dependencies:
+    ember-cli-babel "^6.6.0"
+
 ember-load-initializers@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/ember-load-initializers/-/ember-load-initializers-1.1.0.tgz#4edacc0f3a14d9f53d241ac3e5561804c8377978"

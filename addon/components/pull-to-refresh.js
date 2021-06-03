@@ -1,8 +1,10 @@
-import { observer, computed } from '@ember/object';
-import { once } from '@ember/runloop';
-import { guidFor } from '@ember/object/internals';
 import Component from '@ember/component';
+import { observer, computed } from '@ember/object';
+import { guidFor } from '@ember/object/internals';
+import { once } from '@ember/runloop';
+
 import jQuery from 'jquery';
+import { normalizeEvent } from 'ember-jquery-legacy';
 
 export default Component.extend({
   classNames: 'pull-to-refresh-parent',
@@ -20,7 +22,8 @@ export default Component.extend({
   },
 
   touchStart(e) {
-    const y = e.originalEvent.targetTouches[0].pageY;
+    const nativeEvent = normalizeEvent(e);
+    const y = nativeEvent.targetTouches[0].pageY;
     this._start(y);
   },
 
@@ -46,7 +49,8 @@ export default Component.extend({
 
 
   touchMove(e) {
-    const y = e.originalEvent.targetTouches[0].pageY;
+    const nativeEvent = normalizeEvent(e);
+    const y = nativeEvent.targetTouches[0].pageY;
     this._move(y);
   },
 
@@ -119,8 +123,11 @@ export default Component.extend({
   }),
 
   _setTop(y) {
-    this.$('.pull-to-refresh-child')
-      .css('transform', `translate3d(0, ${y}px, 0)`);
+    let ptrChild = this.element.querySelector('.pull-to-refresh-child');
+
+    if (ptrChild) {
+      ptrChild.style.transform = `translate3d(0, ${y}px, 0)`;
+    }
   },
 
   _dy: computed('_lastY', '_startY', function () {
