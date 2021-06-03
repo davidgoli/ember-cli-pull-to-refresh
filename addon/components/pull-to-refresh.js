@@ -3,6 +3,7 @@ import { observer, computed } from '@ember/object';
 import { guidFor } from '@ember/object/internals';
 import { once } from '@ember/runloop';
 
+import jQuery from 'jquery';
 import { normalizeEvent } from 'ember-jquery-legacy';
 
 export default Component.extend({
@@ -133,11 +134,25 @@ export default Component.extend({
     return this.get('_lastY') - this.get('_startY');
   }),
 
+  // _canPullDown() {
+  //   let scrollable = this.get('_scrollableEl');
+
+  //   if (!scrollable) {
+  //     scrollable = this.element.querySelector(this.get('scrollable'));
+
+  //     if (scrollable) {
+  //       this.set('_scrollableEl', scrollable);
+  //     }
+  //   }
+
+  //   return (!scrollable || scrollable.scrollTop === 0);
+  // },
+
   _canPullDown() {
     let scrollable = this.get('_scrollableEl');
 
     if (!scrollable) {
-      scrollable = this.element.querySelectorAll(this.get('scrollable'));
+      scrollable = jQuery(this.get('scrollable'));
 
       if (scrollable.length > 0) {
         this.set('_scrollableEl', scrollable);
